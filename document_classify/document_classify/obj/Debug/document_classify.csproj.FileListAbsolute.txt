@@ -1,0 +1,7 @@
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\bin\Debug\document_classify.exe.config
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\bin\Debug\document_classify.exe
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\bin\Debug\document_classify.pdb
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\obj\Debug\document_classify.csprojResolveAssemblyReference.cache
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\obj\Debug\document_classify.csproj.CoreCompileInputs.cache
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\obj\Debug\document_classify.exe
+C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\document_classify\document_classify\obj\Debug\document_classify.pdb
