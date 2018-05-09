@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace document_classify
 {
@@ -28,7 +28,15 @@ namespace document_classify
         static void Main(string[] args)
         {
             ReadDirectory();
-            documents[1].InitFiles();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < documents.Count(); i++)
+            {
+                documents[i].InitFiles();
+            }
+            sw.Stop();
+            string runningTime = sw.Elapsed.ToString();
+            Console.Write("Finished   "+runningTime);
             Console.ReadKey();
         }
     }

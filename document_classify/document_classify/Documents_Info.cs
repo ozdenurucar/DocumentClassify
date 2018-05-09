@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 using System.Text.RegularExpressions; //noktalama işaretlerini temizlemek için kullanıldı
-using System.Data.OleDb;
+
 
 namespace document_classify
 {
