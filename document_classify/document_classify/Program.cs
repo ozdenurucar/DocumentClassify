@@ -25,8 +25,6 @@ namespace document_classify
                                                   });
             }
         }
-
-
         static void Main(string[] args)
         {
             ReadDirectory();

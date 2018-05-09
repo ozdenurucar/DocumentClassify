@@ -26,7 +26,8 @@ namespace document_classify
                 var replaceBrackets = Regex.Replace(file,@"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");// \r\n  gibi karakterleri temizlemek için
                 var replacePunctuation = Regex.Replace(replaceBrackets,@"[^\w,]+", " ");// \u karakterini temizlemek için
                 file = replacePunctuation;
-                file = Regex.Replace(file, @"\p{P}", "");//Noktalama işaretlerini temizleme 
+                file = Regex.Replace(file, @"\p{P}", "");//Noktalama işaretlerini temizleme
+                file=file.Replace(" ", "_");
                 All_texts.Add(file.ToLower());//TÜm karakterleri küçük harfe çevirme
             }
         }
