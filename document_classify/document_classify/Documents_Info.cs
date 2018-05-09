@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions; //noktalama işaretlerini temizlemek için kullanıldı
+using System.Data.OleDb;
 
 namespace document_classify
 {
@@ -14,10 +15,13 @@ namespace document_classify
         private string categori;
         private Dictionary<string, int> frequencyOfWords = new Dictionary<string, int>();// kelime-->sıklığı şekilde tutulacak olan veriyapısı
         private List<string> all_texts = new List<string>();
+        private List<string> stop_words = new List<string>();
         public FileInfo[] Files { get => files; set => files = value; }
         public string Categori { get => categori; set => categori = value; }
         public Dictionary<string, int> FrequencyOfWords { get => frequencyOfWords; set => frequencyOfWords = value; }
         public List<string> All_texts { get => all_texts; set => all_texts = value; }
+        public List<string> Stop_words { get => stop_words; set => stop_words = value; }
+
         public void InitFiles()
         {
             for (int i = 0; i < files.Length; i++)
@@ -30,6 +34,13 @@ namespace document_classify
                 file=file.Replace(" ", "_");
                 All_texts.Add(file.ToLower());//TÜm karakterleri küçük harfe çevirme
             }
+        }
+        public void Connect_database()
+        {
+            OleDbConnection connect = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=stopwords.accdb");
+
+
+
         }
         public List<string> clear_the_stop_words(List<string> words)
         {
