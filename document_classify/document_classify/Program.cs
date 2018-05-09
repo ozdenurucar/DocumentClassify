@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace document_classify
 {
@@ -23,14 +24,13 @@ namespace document_classify
                                                    Categori = allCategories[i]
                                                   });
             }
-
         }
 
 
         static void Main(string[] args)
         {
             ReadDirectory();
-            documents[0].InitFiles();
+            documents[1].InitFiles();
             Console.ReadKey();
         }
     }
