@@ -12,3 +12,5 @@ C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_clas
 C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_classify\obj\Debug\document_classify.csproj.CoreCompileInputs.cache
 C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_classify\obj\Debug\document_classify.exe
 C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_classify\obj\Debug\document_classify.pdb
+C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_classify\bin\Debug\NZemberek.dll
+C:\Users\ozden\Documents\GitHub\DocumentClassify\document_classify\document_classify\obj\Debug\document_classify.csproj.CopyComplete
