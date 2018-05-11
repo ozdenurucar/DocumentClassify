@@ -36,12 +36,12 @@ namespace document_classify
 
         public void Prepare()
         {
-            Regex.Replace(text, @"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");
-            Regex.Replace(text, @"[^\w,]+", " ");
-            Regex.Replace(text, @"\p{P}", "");
-            text.ToLower();
-            ClearTheStopWords(text);
-            DeleteSuffixes(text);
+            text = Regex.Replace(text, @"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");
+            text = Regex.Replace(text, @"[^\w,]+", " ");
+            text = Regex.Replace(text, @"\p{P}", "");
+            text = text.ToLower();
+            text = ClearTheStopWords(text);
+            text = DeleteSuffixes(text);
             SetGram2();
             SetGram3();
         }
@@ -74,11 +74,9 @@ namespace document_classify
             {
 
                 if (!gram2.ContainsKey(text.Substring(i, 2)))
-                {
                     gram2.Add(text.Substring(i, 2), 1);
-                    return;
-                }
-                gram2[text.Substring(i, 2)]++;
+                else
+                    gram2[text.Substring(i, 2)]++;
             }
         }
         private void SetGram3()
@@ -86,11 +84,10 @@ namespace document_classify
             for (int i = 0; i < text.Length - 3; ++i)
             {
                 if (!gram3.ContainsKey(text.Substring(i, 3)))
-                {
                     gram3.Add(text.Substring(i, 3), 1);
-                    return;
-                }
-                gram3[text.Substring(i, 3)]++;
+
+                else 
+                    gram3[text.Substring(i, 3)]++;
             }
         }
     }
