@@ -23,6 +23,10 @@ namespace document_classify
                     documents.Add(new NewsFile(file, categori));
                 }
             }
+            Parallel.ForEach(documents, document =>
+            {
+                document.Prepare();
+            });
         }
         static void Main(string[] args)
         {

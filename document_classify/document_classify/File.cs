@@ -18,7 +18,8 @@ namespace document_classify
    class NewsFile
    {
         public string Categori { get; set; }
-        public Dictionary<string, int> Frequencies { get; set; }
+        public Dictionary<string, int> gram2 { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> gram3 { get; set; } = new Dictionary<string, int>();
 
         private TurkishStopWords stopWords = new TurkishStopWords();
 
@@ -31,14 +32,20 @@ namespace document_classify
         {
             Categori = categori;
             text = File.ReadAllText(file.FullName, Encoding.GetEncoding("ISO-8859-9"));
-            text = Regex.Replace(text, @"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");
-            text = Regex.Replace(text, @"[^\w,]+", " ");
-            text = Regex.Replace(text, @"\p{P}", "");
-            text = text.ToLower();
-            text = ClearTheStopWords(text);
-            text = DeleteSuffixes(text);
         }
-        public string ClearTheStopWords(string text)
+
+        public void Prepare()
+        {
+            Regex.Replace(text, @"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");
+            Regex.Replace(text, @"[^\w,]+", " ");
+            Regex.Replace(text, @"\p{P}", "");
+            text.ToLower();
+            ClearTheStopWords(text);
+            DeleteSuffixes(text);
+            SetGram2();
+            SetGram3();
+        }
+        private string ClearTheStopWords(string text)
         {
             string[] words = text.Split(' ');
             
@@ -48,7 +55,7 @@ namespace document_classify
             }
             return text;
         }
-        public string DeleteSuffixes(string text)
+        private string DeleteSuffixes(string text)
         {
             var words = text.Split(' ');
             string result = "";
@@ -59,6 +66,32 @@ namespace document_classify
                     result += solutions[0].GetStem().GetSurface() + "_";
             }
             return result;
+        }
+
+        private void SetGram2()
+        {
+            for(int i = 0; i < text.Length-2; ++i)
+            {
+
+                if (!gram2.ContainsKey(text.Substring(i, 2)))
+                {
+                    gram2.Add(text.Substring(i, 2), 1);
+                    return;
+                }
+                gram2[text.Substring(i, 2)]++;
+            }
+        }
+        private void SetGram3()
+        {
+            for (int i = 0; i < text.Length - 3; ++i)
+            {
+                if (!gram3.ContainsKey(text.Substring(i, 3)))
+                {
+                    gram3.Add(text.Substring(i, 3), 1);
+                    return;
+                }
+                gram3[text.Substring(i, 3)]++;
+            }
         }
     }
 }
