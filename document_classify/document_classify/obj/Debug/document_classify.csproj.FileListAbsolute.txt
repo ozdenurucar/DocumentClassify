@@ -23,3 +23,4 @@ D:\Repositories\Github\DocumentClassify\document_classify\document_classify\bin\
 D:\Repositories\Github\DocumentClassify\document_classify\document_classify\bin\Debug\document_classify.pdb
 D:\Repositories\Github\DocumentClassify\document_classify\document_classify\bin\Debug\NZemberek.dll
 D:\Repositories\Github\DocumentClassify\document_classify\document_classify\obj\Debug\document_classify.csproj.CopyComplete
+D:\Repositories\Github\DocumentClassify\document_classify\document_classify\bin\Debug\Nuve.dll
