@@ -8,18 +8,16 @@ namespace document_classify
 {
     class Program
     {
-
-        static List<DocumentsInfo> documents = new List<DocumentsInfo>(); // 5 kategori için dokumanların tutulacağı dokuman lisatesi
-        static string[] allCategories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
-        static string filePath = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        private static readonly string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        private static List<DocumentsInfo> documents = new List<DocumentsInfo>(); // 5 kategori için dokumanların tutulacağı dokuman lisatesi
+        private static readonly string[] allCategories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
         public static void ReadDirectory()
         {
-            for (int i = 0; i < allCategories.Length; i++)
+            foreach (var categori in allCategories)
             {
-                string file_path_2 = filePath + allCategories[i];
-                DirectoryInfo directory = new DirectoryInfo(file_path_2);
+                DirectoryInfo directory = new DirectoryInfo(dir + categori);
                 documents.Add( new DocumentsInfo { files = directory.GetFiles("*.txt"),
-                                                   Categori = allCategories[i]
+                                                   Categori = categori
                                                  });
             }
         }
@@ -28,9 +26,9 @@ namespace document_classify
             ReadDirectory();
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < documents.Count(); i++)
+            foreach(var document in documents)
             {
-                documents[i].InitFiles();
+                document.InitFiles();
             }
             sw.Stop();
             string runningTime = sw.Elapsed.ToString();

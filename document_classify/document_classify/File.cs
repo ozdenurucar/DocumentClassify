@@ -8,15 +8,24 @@ using Nuve.Morphologic.Structure;
 
 namespace document_classify
 {
+
+    class TurkishStopWords
+    {
+        static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
+
+        public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.GetEncoding("ISO-8859-9"));
+    }
    class NewsFile
    {
         public FileInfo Info { get; set; }
         public string Categori { get; set; }
         public Dictionary<string, int> Frequencies { get; set; }
 
+        private TurkishStopWords stopWords = new TurkishStopWords();
+
         private string text;
         readonly Language tr = LanguageFactory.Create(LanguageType.Turkish);
-
+        
 
 
         public NewsFile(FileInfo file, string categori)
@@ -34,10 +43,10 @@ namespace document_classify
         {
             string[] words = text.Split(' ');
             string result = "";
-            var stopWords = File.ReadAllLines("stop_words.txt", Encoding.GetEncoding("ISO-8859-9"));
+            
             foreach (var word in words)
             {
-                if (!stopWords.Contains(word))
+                if (!stopWords.StopWords.Contains(word))
                 {
                     result += word + " ";
                 }
