@@ -13,11 +13,10 @@ namespace document_classify
     {
         static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
 
-        public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.GetEncoding("ISO-8859-9"));
+        public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.UTF8);
     }
    class NewsFile
    {
-        public FileInfo Info { get; set; }
         public string Categori { get; set; }
         public Dictionary<string, int> Frequencies { get; set; }
 
@@ -42,16 +41,12 @@ namespace document_classify
         public string ClearTheStopWords(string text)
         {
             string[] words = text.Split(' ');
-            string result = "";
             
-            foreach (var word in words)
+            foreach (var stopword in stopWords.StopWords)
             {
-                if (!stopWords.StopWords.Contains(word))
-                {
-                    result += word + " ";
-                }
+                text.Replace(stopword, "");
             }
-            return result;
+            return text;
         }
         public string DeleteSuffixes(string text)
         {
