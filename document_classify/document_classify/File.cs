@@ -15,7 +15,7 @@ namespace document_classify
 
         public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.UTF8);
     }
-   class NewsFile
+   class News
    {
         public string Categori { get; set; }
         public Dictionary<string, int> gram2 { get; set; } = new Dictionary<string, int>();
@@ -28,10 +28,10 @@ namespace document_classify
         
 
 
-        public NewsFile(FileInfo file, string categori)
+        public News(string file, string categori)
         {
             Categori = categori;
-            text = File.ReadAllText(file.FullName, Encoding.GetEncoding("ISO-8859-9"));
+            text = File.ReadAllText(file, Encoding.GetEncoding("ISO-8859-9"));
         }
 
         public void Prepare()
@@ -88,6 +88,22 @@ namespace document_classify
 
                 else 
                     gram3[text.Substring(i, 3)]++;
+            }
+        }
+
+        public void print()
+        {
+            foreach(var key in gram2)
+            {
+                if (key.Value >= 50)
+                    System.Console.Write(key+" ");
+            }
+            foreach (var key in gram3)
+            {
+                if(key.Value >= 50)
+                {
+                    System.Console.Write(key + " ");
+                }
             }
         }
     }
