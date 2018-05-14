@@ -8,7 +8,8 @@ namespace DocumentClassify
 {
     class Program
     {
-        private static readonly string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        //private static readonly string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        private static readonly string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
         private static List<News> documents = new List<News>();
         private static readonly string[] allCategories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
         public static void ReadDirectory()
