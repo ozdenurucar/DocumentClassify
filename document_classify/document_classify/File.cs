@@ -11,7 +11,9 @@ namespace DocumentClassify
 
     class TurkishStopWords
     {
-        static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
+        //static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
+        static readonly string stopWordsPath = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\stop_words.txt";
+        
 
         public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.UTF8);
     }
