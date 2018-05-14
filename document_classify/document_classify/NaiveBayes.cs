@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DocumentClassify
-{ 
+{
+
     class NaiveBayes
     {
         public List<News> TrainingSet { get; set; }
-        public string[] Categories { get; set; }
-        public Dictionary<string,int> Probabilities { get; set; }
         public Dictionary<string,int> Numbers { get; set; }
-
+        public Dictionary<string, Dictionary<string, int>> TrainingData { get; set; } = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, double>> Probabilities { get; set; } = new Dictionary<string, Dictionary<string, double>>();
 
         void PrepareTrainingSet()
         {
@@ -57,8 +55,27 @@ namespace DocumentClassify
                 file.gram3 = file.gram3.Intersect(Frequencies3) as Dictionary<string, int>;
             });
 
+        }     
+        void SetTrainingData()
+        {
+            foreach(var file in TrainingSet)
+            {
+                if (!TrainingData.ContainsKey(file.Categori))
+                    TrainingData.Add(file.Categori, file.GetGrams());
+                else
+                    foreach(var iter in file.GetGrams())
+                    {
+                        if (!TrainingData[file.Categori].ContainsKey(iter.Key))
+                            TrainingData[file.Categori].Add(iter.Key, iter.Value);
+                        else
+                            TrainingData[file.Categori][iter.Key] += iter.Value;
+                    }
+            }
         }
-        
+        void Train()
+        {
+            
+        }
 
     }
 

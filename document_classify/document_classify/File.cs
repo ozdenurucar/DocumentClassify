@@ -91,6 +91,12 @@ namespace DocumentClassify
             }
         }
 
+        public Dictionary<string,int> GetGrams()
+        {
+            Dictionary<string, int> gram = new Dictionary<string, int>(gram2);
+            return gram.Union(gram3) as Dictionary<string,int>;
+        }
+
         public void print()
         {
             foreach(var key in gram2)
