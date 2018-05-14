@@ -43,9 +43,6 @@ namespace DocumentClassify
             sw.Stop();
             Console.WriteLine("elapsed time: " + sw.Elapsed.ToString());
             
-            y.Start();
-            x.Join();
-            y.Join();
             Console.WriteLine("----------------------");
             Console.ReadKey();
         }

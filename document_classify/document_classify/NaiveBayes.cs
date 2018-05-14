@@ -9,11 +9,13 @@ namespace DocumentClassify
 { 
     class NaiveBayes
     {
-        public List<News> TrainingSet;
+        public List<News> TrainingSet { get; set; }
+        public string[] Categories { get; set; }
+        public Dictionary<string,int> Probabilities { get; set; }
+        public Dictionary<string,int> numbers { get; set; }
 
-        public NaiveBayes(List<News> trainingSet) => TrainingSet = trainingSet;
 
-        void SetFrequencies()
+        void PrepareTrainingSet()
         {
             Dictionary<string, int> Frequencies3 = new Dictionary<string, int>();
             Dictionary<string, int> Frequencies2 = new Dictionary<string, int>();
@@ -56,6 +58,8 @@ namespace DocumentClassify
             });
 
         }
+        
+
     }
 
 }
