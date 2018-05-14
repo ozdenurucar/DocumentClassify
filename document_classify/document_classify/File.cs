@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using Nuve.Lang;
 using Nuve.Morphologic.Structure;
 
-namespace document_classify
+namespace DocumentClassify
 {
 
     class TurkishStopWords
