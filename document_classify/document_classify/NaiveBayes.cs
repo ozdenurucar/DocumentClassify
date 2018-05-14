@@ -12,7 +12,7 @@ namespace DocumentClassify
         public List<News> TrainingSet { get; set; }
         public string[] Categories { get; set; }
         public Dictionary<string,int> Probabilities { get; set; }
-        public Dictionary<string,int> numbers { get; set; }
+        public Dictionary<string,int> Numbers { get; set; }
 
 
         void PrepareTrainingSet()
