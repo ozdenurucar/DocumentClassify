@@ -20,8 +20,9 @@ namespace DocumentClassify
    class News
    {
         public string Categori { get; set; }
-        public Dictionary<string, int> Gram2 { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> Gram3 { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, double> Gram2 { get; set; } = new Dictionary<string, double>();
+        public Dictionary<string, double> Gram3 { get; set; } = new Dictionary<string, double>();
+        public Dictionary<string, double> Gram { get; set; } = new Dictionary<string, double>();
 
         private TurkishStopWords stopWords = new TurkishStopWords();
 
@@ -93,18 +94,18 @@ namespace DocumentClassify
             }
         }
 
-        public Dictionary<string,int> GetGrams()
+        public Dictionary<string, double> GetGrams()
         {
-            Dictionary<string, int> gram = new Dictionary<string, int>();
+            
             foreach(var iter in Gram2)
             {
-                gram.Add(iter.Key, iter.Value);
+                Gram.Add(iter.Key, iter.Value);
             }
             foreach(var iter in Gram3)
             {
-                gram.Add(iter.Key, iter.Value);
+                Gram.Add(iter.Key, iter.Value);
             }
-            return gram;
+            return Gram;
         }
 
         public void print()
