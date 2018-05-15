@@ -9,9 +9,6 @@ namespace DocumentClassify
 
     class NaiveBayes
     {
-
-
-
         public List<News> TrainingSet { get; set; }
         public List<News> TestSet { get; set; }
         public Dictionary<string, Dictionary<string, double>> Mean { get;  } = new Dictionary<string, Dictionary<string, double>>();
@@ -142,25 +139,25 @@ namespace DocumentClassify
         public string Deduce(News file) //18 sayfada
         {
             string[] categories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
-            double greatest = 0;
-            string res = "";
+            SortedList<double, string> probs = new SortedList<double, string>(5);
             foreach (var cat in categories)
             {
                 double result = 0.0;
                 foreach (var gram in Mean[cat].ToList())
                 {
+                    double x;
                     if(file.Gram.ContainsKey(gram.Key))
-                        result *= (1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(file.Gram[gram.Key] - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key]))); //18. sayfa denklemi
+                        x = Math.Log((1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(file.Gram[gram.Key] - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key])))); //18. sayfa denklemi
                     else
-                        result *= (1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(0 - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key])));
+                        x = Math.Log((1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(0 - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key]))));
+                    if (!Double.IsNaN(x)&&!Double.IsInfinity(x))
+                        result += x;
                 }
-                if (result > greatest)
-                {
-                    greatest = result;
-                    res = cat;
-                }
+                probs.Add(result,cat);
             }
-            return res;
+
+            var xx = probs.Last();
+            return xx.Value;
         }
 
     }
