@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DocumentClassify
 {
-    class Program
+    static class Program
     {
-        //private static readonly string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
-        private static readonly string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
+        private static readonly string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        //private static readonly string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
         private static List<News> documents = new List<News>();
         private static readonly string[] allCategories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
         public static void ReadDirectory()
@@ -29,6 +29,22 @@ namespace DocumentClassify
             sw.Stop();
             Console.WriteLine("elapsed time: " + sw.Elapsed.ToString());
         }
+
+        public static List<List<News>> ShuffleAndSplit(this List<News> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+            return new List<List<News>> { list.GetRange(0,list.Count* 3/4), list.GetRange(list.Count*3/4, list.Count-list.Count*3/4) };
+        }
+
         static void Main(string[] args)
         {
             ReadDirectory();
@@ -40,7 +56,8 @@ namespace DocumentClassify
                 document.Prepare();
             });
             sw.Stop();
-            Console.WriteLine("elapsed time: " + sw.Elapsed.ToString());
+            var lists = ShuffleAndSplit(documents);
+            NaiveBayes bayes = new NaiveBayes (lists[0], lists[1]);
             
             Console.WriteLine("----------------------");
             Console.ReadKey();
