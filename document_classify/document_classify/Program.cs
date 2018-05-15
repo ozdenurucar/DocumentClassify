@@ -58,6 +58,7 @@ namespace DocumentClassify
             sw.Stop();
             var lists = ShuffleAndSplit(documents);
             NaiveBayes bayes = new NaiveBayes (lists[0], lists[1]);
+            bayes.Deduce(lists[1][0]);
             
             Console.WriteLine("----------------------");
             Console.ReadKey();

@@ -47,6 +47,7 @@ namespace DocumentClassify
             text = DeleteSuffixes(text);
             SetGram2();
             SetGram3();
+            GetGrams();
         }
         private string ClearTheStopWords(string text)
         {

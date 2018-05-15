@@ -9,9 +9,11 @@ namespace DocumentClassify
 
     class NaiveBayes
     {
+
+
+
         public List<News> TrainingSet { get; set; }
         public List<News> TestSet { get; set; }
-        public Dictionary<string, double> Numbers { get; set; }
         public Dictionary<string, Dictionary<string, double>> Mean { get;  } = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string, Dictionary<string, double>> Variance { get; } = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string,double> CategoriProb { get; set; } = new Dictionary<string,double>();
@@ -75,9 +77,9 @@ namespace DocumentClassify
             foreach(var file in TrainingSet)
             {
                 if (!Mean.ContainsKey(file.Categori))
-                    Mean.Add(file.Categori, file.GetGrams());
+                    Mean.Add(file.Categori, file.Gram);
                 else
-                    foreach(var iter in file.GetGrams())
+                    foreach(var iter in file.Gram)
                     {
                         if (!Mean[file.Categori].ContainsKey(iter.Key))
                             Mean[file.Categori].Add(iter.Key, iter.Value);
@@ -137,9 +139,28 @@ namespace DocumentClassify
             }
 
         }
-        void Train()
+        public string Deduce(News file) //18 sayfada
         {
-            
+            string[] categories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
+            double greatest = 0;
+            string res = "";
+            foreach (var cat in categories)
+            {
+                double result = 0.0;
+                foreach (var gram in Mean[cat].ToList())
+                {
+                    if(file.Gram.ContainsKey(gram.Key))
+                        result *= (1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(file.Gram[gram.Key] - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key]))); //18. sayfa denklemi
+                    else
+                        result *= (1 / (Math.Sqrt(2 * Math.PI * Variance[cat][gram.Key]))) * Math.Pow(Math.E, -1 * (Math.Pow(0 - Mean[cat][gram.Key], 2) / (2 * Variance[cat][gram.Key])));
+                }
+                if (result > greatest)
+                {
+                    greatest = result;
+                    res = cat;
+                }
+            }
+            return res;
         }
 
     }
