@@ -95,8 +95,15 @@ namespace DocumentClassify
 
         public Dictionary<string,int> GetGrams()
         {
-            Dictionary<string, int> gram = this.Gram2;
-            gram.Concat(Gram3.ToList());
+            Dictionary<string, int> gram = new Dictionary<string, int>();
+            foreach(var iter in Gram2)
+            {
+                gram.Add(iter.Key, iter.Value);
+            }
+            foreach(var iter in Gram3)
+            {
+                gram.Add(iter.Key, iter.Value);
+            }
             return gram;
         }
 
