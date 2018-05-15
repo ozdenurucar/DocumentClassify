@@ -93,10 +93,12 @@ namespace DocumentClassify
             }
         }
 
-        /*public Dictionary<string,int> GetGrams()
+        public Dictionary<string,int> GetGrams()
         {
             Dictionary<string, int> gram = this.Gram2;
-        }*/
+            gram.Concat(Gram3.ToList());
+            return gram;
+        }
 
         public void print()
         {
