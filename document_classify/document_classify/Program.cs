@@ -12,6 +12,7 @@ namespace DocumentClassify
         //private static readonly string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
         private static List<News> documents = new List<News>();
         private static readonly string[] allCategories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
+        private static Dictionary<string, List<News>> News = new Dictionary<string, List<News>>();
         public static void ReadDirectory()
         {
             Stopwatch sw = new Stopwatch();
@@ -21,28 +22,38 @@ namespace DocumentClassify
             {
                 
                 string[] files = Directory.GetFiles(dir + categori);
+                News.Add(categori, new List<News>());
                 foreach(var file in files)
                 {
                     documents.Add(new News(file, categori));
+                    News[categori].Add(documents[documents.Count - 1]);
                 }
             }
             sw.Stop();
             Console.WriteLine("elapsed time: " + sw.Elapsed.ToString());
         }
 
-        public static List<List<News>> ShuffleAndSplit(this List<News> list)
+        public static List<List<News>> ShuffleAndSplit(this Dictionary<string,List<News>> dict)
         {
+            List<News> trainingData = new List<News>();
+            List<News> testData = new List<News>();
             Random rng = new Random();
-            int n = list.Count;
-            while (n > 1)
+            foreach(var categori in dict.Keys)
             {
-                n--;
-                int k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+                int n = dict[categori].Count;
+                while(n > 1)
+                {
+                    n--;
+                    int k = rng.Next(n + 1);
+                    var value = dict[categori][k];
+                    dict[categori][k] = dict[categori][n];
+                    dict[categori][n] = value;
+                }
+                trainingData.AddRange(dict[categori].GetRange(0,dict[categori].Count * 3/4));
+                testData.AddRange(dict[categori].GetRange(dict[categori].Count * 3 / 4, dict[categori].Count - dict[categori].Count * 3 / 4));
             }
-            return new List<List<News>> { list.GetRange(0,list.Count* 3/4), list.GetRange(list.Count*3/4, list.Count-list.Count*3/4) };
+
+            return new List<List<News>> { trainingData,testData };
         }
 
         static void Main(string[] args)
@@ -56,7 +67,7 @@ namespace DocumentClassify
                 document.Prepare();
             });
             sw.Stop();
-            var lists = ShuffleAndSplit(documents);
+            var lists = ShuffleAndSplit(News);
             NaiveBayes bayes = new NaiveBayes (lists[0], lists[1]);
             int x = 0;
             foreach(var file in lists[1])
