@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSet.cs" />
     <Compile Include="File.cs" />
     <Compile Include="NaiveBayes.cs" />
     <Compile Include="Program.cs" />

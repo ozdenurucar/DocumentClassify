@@ -14,7 +14,7 @@ namespace DocumentClassify
         {
             DataSet dataset = new DataSet(dir);
             NaiveBayes.Train bayes = new NaiveBayes.Train (dataset.TrainingData);
-            NaiveBayes.Test test = new NaiveBayes.Test(bayes,dataset.AllCategories);
+            NaiveBayes.Test test = new NaiveBayes.Test(bayes,dataset.Categories);
 
             test.PredictAll(dataset.TestData);
             var results = test.Results;
