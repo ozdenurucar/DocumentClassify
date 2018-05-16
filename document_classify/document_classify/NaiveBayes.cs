@@ -10,16 +10,16 @@ namespace DocumentClassify
     class NaiveBayes
     {
         public List<News> TrainingSet { get; set; }
-        public List<News> TestSet { get; set; }
         public Dictionary<string, Dictionary<string, double>> Mean { get;  } = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string, Dictionary<string, double>> Variance { get; } = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string,double> CategoriProb { get; set; } = new Dictionary<string,double>();
         public Dictionary<string, double> CategoriCount { get; set; } = new Dictionary<string, double>(5);
+        string[] categories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
 
-        public NaiveBayes(List<News> trainingSet,List<News> testSet)
+
+        public NaiveBayes(List<News> trainingSet)
         {
             TrainingSet = trainingSet;
-            TestSet = testSet;
             PrepareTrainingSet();
             SetCategoriProbability();
             SetTrainingData();
@@ -138,7 +138,6 @@ namespace DocumentClassify
         }
         public string Deduce(News file) //18 sayfada
         {
-            string[] categories = { "ekonomi", "magazin", "saglik", "siyasi", "spor" };
             SortedList<double, string> probs = new SortedList<double, string>(5);
             foreach (var cat in categories)
             {
@@ -159,6 +158,34 @@ namespace DocumentClassify
             var xx = probs.Last();
             return xx.Value;
         }
+
+        public Dictionary<string,Tuple<double,double,double>> PrecisionRecallAndFMeasure(List<Tuple<string,string>> predictions)
+        {
+            var result = new Dictionary<string, Tuple<double, double,double>>();
+            foreach(var cat in categories)
+            {
+                double TP = 0, FP = 0, FN = 0, TN = 0;
+                foreach(var prediction in predictions)
+                {
+                    if (prediction.Item1 == cat && prediction.Item2 == cat)
+                        TP++;
+                    else if (prediction.Item1 == cat && prediction.Item2 != cat)
+                        FN++;
+                    else if (prediction.Item1 != cat && prediction.Item2 == cat)
+                        FP++;
+                    else
+                        TN++;
+                }
+                double precision = TP / (TP + FN);
+                double recall = TP / (TP + FP);
+                double fMeasure = (2 * precision * recall) / (precision + recall);
+                result.Add(cat, new Tuple<double, double, double>(precision, recall, fMeasure));
+            }
+            return result;
+        }
+
+
+
 
     }
 

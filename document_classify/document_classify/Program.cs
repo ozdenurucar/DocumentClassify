@@ -68,18 +68,20 @@ namespace DocumentClassify
             });
             sw.Stop();
             var lists = ShuffleAndSplit(News);
-            NaiveBayes bayes = new NaiveBayes (lists[0], lists[1]);
+            NaiveBayes bayes = new NaiveBayes (lists[0]);
             int x = 0;
+            List<Tuple<string, string>> predictions = new List<Tuple<string, string>>();
             foreach(var file in lists[1])
             {
                 string xx = bayes.Deduce(file);
                 Console.WriteLine(file.Categori+":  "+ xx);
                 if (file.Categori == xx)
                     x++;
+                predictions.Add(new Tuple<string,string>(file.Categori, xx));
             }
             double result = (x * 1.0 / lists[1].Count) * 100;
             Console.WriteLine("%"+result);
-            
+            bayes.PrecisionRecallAndFMeasure(predictions);
             
             Console.WriteLine("----------------------");
             Console.ReadKey();
