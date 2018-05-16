@@ -8,8 +8,8 @@ namespace DocumentClassify
 {
     class Program
     {
-        static string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
-        //string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
+       // static string dir = @"C:\Users\alper\Downloads\1150haber\raw_texts\";
+        static string dir = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\raw_texts\";
         static void Main(string[] args)
         {
             DataSet dataset = new DataSet(dir);

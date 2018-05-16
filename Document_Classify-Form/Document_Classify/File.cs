@@ -6,21 +6,21 @@ using System.Text.RegularExpressions;
 using Nuve.Lang;
 using Nuve.Morphologic.Structure;
 
-namespace DocumentClassify
+namespace Document_Classify
 {
     class TurkishStopWords
     {
         //static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
-        static readonly string stopWordsPath = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\stop_words.txt";  
+        static readonly string stopWordsPath = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\stop_words.txt";
         public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.UTF8);
     }
-   class News
-   {
+    class News
+    {
         public string Categori { get; set; }
         public Dictionary<string, double> Gram { get; set; } = new Dictionary<string, double>();
         private TurkishStopWords stopWords = new TurkishStopWords();
         private string text;
-        readonly Language tr = LanguageFactory.Create(LanguageType.Turkish);        
+        readonly Language tr = LanguageFactory.Create(LanguageType.Turkish);
         public News(string file, string categori)
         {
             Categori = categori;
@@ -39,7 +39,7 @@ namespace DocumentClassify
         private string ClearTheStopWords(string text)
         {
             string[] words = text.Split(' ');
-            
+
             foreach (var stopword in stopWords.StopWords)
             {
                 text.Replace(stopword, "");
@@ -58,10 +58,10 @@ namespace DocumentClassify
             }
             return result;
         }
-        private Dictionary<string,double> SetGram2()
+        private Dictionary<string, double> SetGram2()
         {
-            Dictionary<string, double> Gram2  = new Dictionary<string, double>();
-            for(int i = 0; i < text.Length-2; ++i)
+            Dictionary<string, double> Gram2 = new Dictionary<string, double>();
+            for (int i = 0; i < text.Length - 2; ++i)
             {
 
                 if (!Gram2.ContainsKey(text.Substring(i, 2)))
@@ -88,11 +88,11 @@ namespace DocumentClassify
         {
             var Gram2 = SetGram2();
             var Gram3 = SetGram3();
-            foreach(var iter in Gram2)
+            foreach (var iter in Gram2)
             {
                 Gram.Add(iter.Key, iter.Value);
             }
-            foreach(var iter in Gram3)
+            foreach (var iter in Gram3)
             {
                 Gram.Add(iter.Key, iter.Value);
             }
