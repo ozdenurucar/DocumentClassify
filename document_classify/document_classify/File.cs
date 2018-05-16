@@ -8,35 +8,24 @@ using Nuve.Morphologic.Structure;
 
 namespace DocumentClassify
 {
-
     class TurkishStopWords
     {
         static readonly string stopWordsPath = @"C:\Users\alper\Downloads\1150haber\stop_words.txt";
-        //static readonly string stopWordsPath = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\stop_words.txt";
-        
-
+        //static readonly string stopWordsPath = @"C:\Users\ozden\Desktop\Yazlab  II\Dokuman Siniflandirma\1150haber\stop_words.txt";  
         public string[] StopWords { get; } = File.ReadAllLines(stopWordsPath, Encoding.UTF8);
     }
    class News
    {
         public string Categori { get; set; }
-        public Dictionary<string, double> Gram2 { get; set; } = new Dictionary<string, double>();
-        public Dictionary<string, double> Gram3 { get; set; } = new Dictionary<string, double>();
         public Dictionary<string, double> Gram { get; set; } = new Dictionary<string, double>();
-
         private TurkishStopWords stopWords = new TurkishStopWords();
-
         private string text;
-        readonly Language tr = LanguageFactory.Create(LanguageType.Turkish);
-        
-
-
+        readonly Language tr = LanguageFactory.Create(LanguageType.Turkish);        
         public News(string file, string categori)
         {
             Categori = categori;
             text = File.ReadAllText(file, Encoding.GetEncoding("ISO-8859-9"));
         }
-
         public void Prepare()
         {
             text = Regex.Replace(text, @"\((?'content'[^)]+)\)", match => $", {match.Groups["content"].Value}");
@@ -45,9 +34,7 @@ namespace DocumentClassify
             text = text.ToLower();
             text = ClearTheStopWords(text);
             text = DeleteSuffixes(text);
-            SetGram2();
-            SetGram3();
-            GetGrams();
+            SetGrams();
         }
         private string ClearTheStopWords(string text)
         {
@@ -71,9 +58,9 @@ namespace DocumentClassify
             }
             return result;
         }
-
-        private void SetGram2()
+        private Dictionary<string,double> SetGram2()
         {
+            Dictionary<string, double> Gram2  = new Dictionary<string, double>();
             for(int i = 0; i < text.Length-2; ++i)
             {
 
@@ -82,22 +69,25 @@ namespace DocumentClassify
                 else
                     Gram2[text.Substring(i, 2)]++;
             }
+            return Gram2;
         }
-        private void SetGram3()
+        private Dictionary<string, double> SetGram3()
         {
+            Dictionary<string, double> Gram3 = new Dictionary<string, double>();
             for (int i = 0; i < text.Length - 3; ++i)
             {
                 if (!Gram3.ContainsKey(text.Substring(i, 3)))
                     Gram3.Add(text.Substring(i, 3), 1);
 
-                else 
+                else
                     Gram3[text.Substring(i, 3)]++;
             }
+            return Gram3;
         }
-
-        public Dictionary<string, double> GetGrams()
+        private void SetGrams()
         {
-            
+            var Gram2 = SetGram2();
+            var Gram3 = SetGram3();
             foreach(var iter in Gram2)
             {
                 Gram.Add(iter.Key, iter.Value);
@@ -105,23 +95,6 @@ namespace DocumentClassify
             foreach(var iter in Gram3)
             {
                 Gram.Add(iter.Key, iter.Value);
-            }
-            return Gram;
-        }
-
-        public void print()
-        {
-            foreach(var key in Gram2)
-            {
-                if (key.Value >= 50)
-                    System.Console.Write(key+" ");
-            }
-            foreach (var key in Gram3)
-            {
-                if(key.Value >= 50)
-                {
-                    System.Console.Write(key + " ");
-                }
             }
         }
     }
