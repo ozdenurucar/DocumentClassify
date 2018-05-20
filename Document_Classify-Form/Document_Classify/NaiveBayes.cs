@@ -62,7 +62,6 @@ namespace Document_Classify
                     {
                         file.Gram = file.Gram.Keys.Intersect(Frequencies.Keys).ToDictionary(t => t, t => file.Gram[t]);
                     });
->>>>>>> 343cc5b60fcdda728a6cb6d44121edabeba2daea
                 }
                 Parallel.ForEach(TrainingSet, file =>
                 {
