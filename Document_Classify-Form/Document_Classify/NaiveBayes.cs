@@ -47,8 +47,6 @@ namespace Document_Classify
                     {
                         file.Gram = file.Gram.Keys.Intersect(Frequencies.Keys).ToDictionary(t => t, t => file.Gram[t]);
                     });
-
-
                 }
                 void SetVarianceAndMean()
                 {
