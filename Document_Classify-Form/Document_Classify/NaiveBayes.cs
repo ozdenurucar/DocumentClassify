@@ -40,7 +40,29 @@ namespace Document_Classify
                 }
                 foreach (var iter in Frequencies.Where(kv => kv.Value < 50).ToList())
                 {
+<<<<<<< HEAD
                     Frequencies.Remove(iter.Key);
+=======
+                    Dictionary<string, double> Frequencies = new Dictionary<string, double>();
+                    foreach (var document in TrainingSet)
+                    {
+                        foreach (var gram in document.Gram)
+                        {
+                            if (!Frequencies.ContainsKey(gram.Key))
+                                Frequencies.Add(gram.Key, gram.Value);
+                            else
+                                Frequencies[gram.Key] += gram.Value;
+                        }
+                    }
+                    foreach (var iter in Frequencies.Where(kv => kv.Value < 50).ToList())
+                    {
+                        Frequencies.Remove(iter.Key);
+                    }
+                    Parallel.ForEach(TrainingSet, file =>
+                    {
+                        file.Gram = file.Gram.Keys.Intersect(Frequencies.Keys).ToDictionary(t => t, t => file.Gram[t]);
+                    });
+>>>>>>> 343cc5b60fcdda728a6cb6d44121edabeba2daea
                 }
                 Parallel.ForEach(TrainingSet, file =>
                 {
